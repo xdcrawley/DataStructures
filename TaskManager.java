@@ -19,21 +19,35 @@ import java.util.ArrayList;
 */
 // So far is just the basic structure
 public class TaskManager {
-	private ArrayList<Task> taskList;
+    private LinkedList taskList;
+    private PriorityQueue priorityQueue;
 
     public TaskManager() {
-        taskList = new ArrayList<>();
+        taskList = new LinkedList();
+        priorityQueue = new PriorityQueue();
     }
 
     // Add task
     public void addTask(Task task) {
         taskList.add(task);
+        priorityQueue.enqueue(task);
+    }
+
+    // Remove task
+    public void removeTask(String name) {
+        taskList.remove(name);
+        // Note: PriorityQueue removal will be improved later if needed
     }
 
     // Display all tasks
-    public void displayTasks() {
-        for (Task task : taskList) {
-            task.displayTask();
-        }
+    public void displayAllTasks() {
+        System.out.println("All Tasks:");
+        taskList.display();
+    }
+
+    // Display priority tasks
+    public void displayPriorityTasks() {
+        System.out.println("Priority Tasks:");
+        priorityQueue.display();
     }
 }

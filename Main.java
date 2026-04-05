@@ -21,16 +21,25 @@ public class Main {
 
         TaskManager manager = new TaskManager();
 
-        // Create test tasks
-        Task t1 = new Task("Math Homework", "2026-04-01", 2);
-        Task t2 = new Task("Study for Exam", "2026-03-30", 1);
-
         // Add tasks
-        manager.addTask(t1);
-        manager.addTask(t2);
+        manager.addTask(new Task("Math Homework", "2026-04-01", 2));
+        manager.addTask(new Task("Study for Exam", "2026-03-30", 1));
+        manager.addTask(new Task("Project", "2026-04-05", 3));
 
-        // Display tasks
-        System.out.println("Task List:");
-        manager.displayTasks();
+        // Display all tasks
+        manager.displayAllTasks();
+
+        System.out.println();
+
+        // Display priority queue
+        manager.displayPriorityTasks();
+
+        System.out.println();
+
+        // Remove a task
+        manager.removeTask("Math Homework");
+
+        System.out.println("After Removal:");
+        manager.displayAllTasks();
     }
 }
