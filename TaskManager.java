@@ -19,7 +19,6 @@ import java.util.Scanner;
 * unmodified, nor used generative AI as a final draft. 
 * I have not given other fellow student(s) access to my program.
 */
-// So far is just the basic structure
 public class TaskManager {
     private LinkedList taskList;        // Stores all tasks
     private PriorityQueue priorityQueue; // Stores tasks by priority

@@ -1,5 +1,7 @@
 package FinalProject;
 
+import java.util.Scanner;
+
 /** Final Project Main or Driver Class
 * Xander Crawley - xdcrawley
 * CIS153 23909
@@ -16,8 +18,6 @@ package FinalProject;
 * I have not given other fellow student(s) access to my program.
 */
 //Driver Class
-import java.util.Scanner;
-
 public class Main {
     public static void main(String[] args) {
 
