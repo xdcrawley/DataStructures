@@ -16,30 +16,68 @@ package FinalProject;
 * I have not given other fellow student(s) access to my program.
 */
 //Driver Class
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
 
+        Scanner scanner = new Scanner(System.in);
         TaskManager manager = new TaskManager();
 
-        // Add tasks
-        manager.addTask(new Task("Math Homework", "2026-04-01", 2));
-        manager.addTask(new Task("Study for Exam", "2026-03-30", 1));
-        manager.addTask(new Task("Project", "2026-04-05", 3));
+        int choice;
 
-        // Display all tasks
-        manager.displayAllTasks();
+        // Loop until user exits
+        do {
+            System.out.println("\n--- Smart Study Planner ---");
+            System.out.println("1. Add Task");
+            System.out.println("2. View All Tasks");
+            System.out.println("3. View Sorted Tasks");
+            System.out.println("4. Exit");
+            System.out.print("Enter choice: ");
 
-        System.out.println();
+            choice = scanner.nextInt();
+            scanner.nextLine(); // Clear buffer
 
-        // Display priority queue
-        manager.displayPriorityTasks();
+            switch (choice) {
 
-        System.out.println();
+                case 1:
+                    // Get task details from user
+                    System.out.print("Enter task name: ");
+                    String name = scanner.nextLine();
 
-        // Remove a task
-        manager.removeTask("Math Homework");
+                    System.out.print("Enter due date: ");
+                    String dueDate = scanner.nextLine();
 
-        System.out.println("After Removal:");
-        manager.displayAllTasks();
+                    System.out.print("Enter priority (1 = high): ");
+                    int priority = scanner.nextInt();
+
+                    // Create and add task
+                    manager.addTask(new Task(name, dueDate, priority));
+                    System.out.println("Task added!");
+                    break;
+
+                case 2:
+                    // Display all tasks
+                    manager.displayAllTasks();
+                    break;
+
+                case 3:
+                    // Display sorted tasks
+                    manager.displaySortedTasks();
+                    break;
+
+                case 4:
+                    // Exit program
+                    System.out.println("Exiting...");
+                    break;
+
+                default:
+                    System.out.println("Invalid choice.");
+            }
+
+        } 
+        while (choice != 4);
+
+        scanner.close(); // Close scanner
     }
 }

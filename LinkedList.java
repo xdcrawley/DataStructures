@@ -16,55 +16,112 @@ package FinalProject;
 * I have not given other fellow student(s) access to my program.
 */
 public class LinkedList {
-    private Node head;
+    private Node head; // Head of the linked list
 
-    // Add task to end
+    // Add task to end of list
     public void add(Task task) {
         Node newNode = new Node(task);
 
+        // If list is empty, new node becomes head
         if (head == null) {
             head = newNode;
             return;
         }
 
+        // Traverse to end of list
         Node current = head;
         while (current.next != null) {
             current = current.next;
         }
 
+        // Add new node at the end
         current.next = newNode;
-    }
-
-    // Remove task by name
-    public void remove(String name) {
-        if (head == null) return;
-
-        if (head.data.getName().equals(name)) {
-            head = head.next;
-            return;
-        }
-
-        Node current = head;
-        while (current.next != null) {
-            if (current.next.data.getName().equals(name)) {
-                current.next = current.next.next;
-                return;
-            }
-            current = current.next;
-        }
     }
 
     // Display all tasks
     public void display() {
         Node current = head;
+
         while (current != null) {
             current.data.displayTask();
             current = current.next;
         }
     }
 
-    // Get head (used by other structures)
+    // Getter for head (used in sorting)
     public Node getHead() {
         return head;
+    }
+
+    // Setter for head (used after sorting)
+    public void setHead(Node head) {
+        this.head = head;
+    }
+
+    // =========================
+    // MERGE SORT IMPLEMENTATION
+    // =========================
+
+    // Public method to start sorting
+    public void sortByPriority() {
+        head = mergeSort(head);
+    }
+
+    // Recursive merge sort function
+    private Node mergeSort(Node head) {
+        // Base case: empty or single node
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        // Get middle of list
+        Node middle = getMiddle(head);
+        Node nextOfMiddle = middle.next;
+
+        // Split the list into two halves
+        middle.next = null;
+
+        // Recursively sort both halves
+        Node left = mergeSort(head);
+        Node right = mergeSort(nextOfMiddle);
+
+        // Merge sorted halves
+        return merge(left, right);
+    }
+
+    // Merge two sorted lists
+    private Node merge(Node left, Node right) {
+        // Base cases
+        if (left == null) return right;
+        if (right == null) return left;
+
+        Node result;
+
+        // Compare priority values (lower = higher priority)
+        if (left.data.getPriority() <= right.data.getPriority()) {
+            result = left;
+            result.next = merge(left.next, right);
+        } else {
+            result = right;
+            result.next = merge(left, right.next);
+        }
+
+        return result;
+    }
+
+    // Find middle node using slow/fast pointer method
+    private Node getMiddle(Node head) {
+        if (head == null) return head;
+
+        Node slow = head;
+        Node fast = head;
+
+        // Move fast twice as fast as slow
+        while (fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        return slow; // slow is at middle
     }
 }

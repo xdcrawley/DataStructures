@@ -1,6 +1,8 @@
 package FinalProject;
 
 import java.util.ArrayList;
+import java.util.Scanner;
+
 
 /** Final Project Task Manager Class
 * Xander Crawley - xdcrawley
@@ -19,35 +21,31 @@ import java.util.ArrayList;
 */
 // So far is just the basic structure
 public class TaskManager {
-    private LinkedList taskList;
-    private PriorityQueue priorityQueue;
+    private LinkedList taskList;        // Stores all tasks
+    private PriorityQueue priorityQueue; // Stores tasks by priority
 
+    // Constructor
     public TaskManager() {
         taskList = new LinkedList();
         priorityQueue = new PriorityQueue();
     }
 
-    // Add task
+    // Add a new task to both structures
     public void addTask(Task task) {
         taskList.add(task);
         priorityQueue.enqueue(task);
     }
 
-    // Remove task
-    public void removeTask(String name) {
-        taskList.remove(name);
-        // Note: PriorityQueue removal will be improved later if needed
-    }
-
-    // Display all tasks
+    // Display all tasks (unsorted)
     public void displayAllTasks() {
         System.out.println("All Tasks:");
         taskList.display();
     }
 
-    // Display priority tasks
-    public void displayPriorityTasks() {
-        System.out.println("Priority Tasks:");
-        priorityQueue.display();
+    // Display tasks sorted by priority using merge sort
+    public void displaySortedTasks() {
+        taskList.sortByPriority();
+        System.out.println("Sorted Tasks (by priority):");
+        taskList.display();
     }
 }
