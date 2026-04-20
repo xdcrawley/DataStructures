@@ -16,9 +16,9 @@ package FinalProject;
 * I have not given other fellow student(s) access to my program.
 */
 public class LinkedList {
-    private Node head; // Head of the linked list
+    private Node head; // Head (first node) of the list
 
-    // Add task to end of list
+    // Add a task to the end of the linked list
     public void add(Task task) {
         Node newNode = new Node(task);
 
@@ -28,7 +28,7 @@ public class LinkedList {
             return;
         }
 
-        // Traverse to end of list
+        // Traverse to the end of the list
         Node current = head;
         while (current.next != null) {
             current = current.next;
@@ -38,47 +38,74 @@ public class LinkedList {
         current.next = newNode;
     }
 
-    // Display all tasks
+    // Remove a task by its name
+    public void remove(String name) {
+        // Check if list is empty
+        if (head == null) {
+            System.out.println("List is empty.");
+            return;
+        }
+
+        // If head needs to be removed
+        if (head.data.getName().equals(name)) {
+            head = head.next;
+            return;
+        }
+
+        Node current = head;
+
+        // Traverse list to find the task
+        while (current.next != null) {
+            if (current.next.data.getName().equals(name)) {
+                current.next = current.next.next; // Remove node
+                return;
+            }
+            current = current.next;
+        }
+
+        // If task was not found
+        System.out.println("Task not found.");
+    }
+
+    // Display all tasks in the list
     public void display() {
         Node current = head;
 
+        // Traverse and print each task
         while (current != null) {
             current.data.displayTask();
             current = current.next;
         }
     }
 
-    // Getter for head (used in sorting)
+    // Get the head of the list
     public Node getHead() {
         return head;
     }
 
-    // Setter for head (used after sorting)
+    // Set the head (used after sorting)
     public void setHead(Node head) {
         this.head = head;
     }
 
-    // =========================
     // MERGE SORT IMPLEMENTATION
-    // =========================
-
-    // Public method to start sorting
+    // Public method to sort list by priority
     public void sortByPriority() {
         head = mergeSort(head);
     }
 
-    // Recursive merge sort function
+    // Recursive merge sort method
     private Node mergeSort(Node head) {
-        // Base case: empty or single node
+        // Base case: 0 or 1 node
         if (head == null || head.next == null) {
             return head;
         }
 
-        // Get middle of list
+        // Find middle of list
         Node middle = getMiddle(head);
         Node nextOfMiddle = middle.next;
 
-        // Split the list into two halves
+        // Split list into two halves
         middle.next = null;
 
         // Recursively sort both halves
@@ -89,39 +116,36 @@ public class LinkedList {
         return merge(left, right);
     }
 
-    // Merge two sorted lists
+    // Merge two sorted linked lists
     private Node merge(Node left, Node right) {
         // Base cases
         if (left == null) return right;
         if (right == null) return left;
-
         Node result;
 
-        // Compare priority values (lower = higher priority)
+        // Compare priorities (lower number = higher priority)
         if (left.data.getPriority() <= right.data.getPriority()) {
             result = left;
             result.next = merge(left.next, right);
-        } else {
+        } 
+        else {
             result = right;
             result.next = merge(left, right.next);
         }
-
         return result;
     }
 
-    // Find middle node using slow/fast pointer method
+    // Find middle node using slow/fast pointers
     private Node getMiddle(Node head) {
         if (head == null) return head;
-
         Node slow = head;
         Node fast = head;
 
-        // Move fast twice as fast as slow
+        // Move fast pointer twice as fast as slow
         while (fast.next != null && fast.next.next != null) {
             slow = slow.next;
             fast = fast.next.next;
         }
-
-        return slow; // slow is at middle
+        return slow; // Slow pointer is at middle
     }
 }
